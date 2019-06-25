@@ -25,7 +25,7 @@
  for each. 
  
  I'm also not sure how much of this is webpack adding in things. I'm using the `css-to-string-loader` to 
- drop a the scss file into a `css\`\`` tagged template using `unsafeCSS()`. I think it's fine for this tiny
+ drop a the scss file into a ``css` ` `` tagged template using `unsafeCSS()`. I think it's fine for this tiny
  little component, but in any non-trivial project, that would have unsafeCSS processing a ton of styles.
   
  I think I can do better even with lit-element, but it may take some very odd wrangling to pull it off.
