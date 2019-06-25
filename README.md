@@ -48,6 +48,6 @@ of gerbils? I'm down, can't be any worse than writing custom loaders for webpack
 ## Experiments
 
 ### A Dirt-Dumb webpack Single WC
- [webpack-stupid-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/) is my first attempt at creating a single file, fully enclosed 
+ [webpack-stupid-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/webpack-stupid-wc) is my first attempt at creating a single file, fully enclosed 
  Web Component based on LitElement. It works, but that's about all I can say for it.
 
