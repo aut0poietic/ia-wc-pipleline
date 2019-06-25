@@ -1,4 +1,4 @@
-#An Intentionally Stupid Attempt
+# An Intentionally Stupid Attempt
  This directory contains an attempt and plodding forward to build a Web Component with
  webpack, SASS and lit-element without any conscious thought. 
  
