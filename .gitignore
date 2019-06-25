@@ -1,0 +1,4 @@
+# Ignore WebStorm/PHPStorm
+.idea/*
+node_modules
+.DS_Store
