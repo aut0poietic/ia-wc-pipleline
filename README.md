@@ -5,10 +5,8 @@ Web Components, here I come. YeeHAW!
 
 But seriously, Web Component scratch a particular hard-to-reach itch of mine that -- well you don't 
 want to hear about that. The long-and-short of it is that I know absolutely nothing about 
-Web Components (other than they must be CAPITALIZED). 
-
-I've been working with React for a bit now and after playing around with Web Components, 
-I have this impression of what I want from them:
+Web Components (other than they must be CAPITALIZED), but I have this impression of how I want them 
+to work:
 
 - **Minimal**<br>What attracted me to Web Components in the first place was the idea
  that I could have a tiny little file that delivered a single, cohesive component. 
