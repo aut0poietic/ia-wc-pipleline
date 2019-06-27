@@ -1,34 +1,32 @@
 # An Intentionally Stupid Attempt
 
- This directory contains an attempt and plodding forward to build a Web Component with
- webpack, SASS and lit-element without much thought or planning.
+ This directory contains an attempt to build a lit-element based Web Component with
+ webpack & node-sass without much thought or planning.
 
  You can rebuild this yourself using `npm run build` and serve it up using `npm run serve`.
  
-##Results
+## The Process
+The source files are in a directory named for the component, with the idea being that the 
+build process would capture the directory name and generate the file name. (Of course, I didn't 
+actually put that bit in there.)
+
+The `ia-card/index.js` file is the entry point and I put no thought into handling it so there
+ are no rules in the config for it. No Babel, either. 
+ 
+The `ia-card/index.scss` is imported into a JS as a variable and lit-element uses that in the
+static `styles` getter, as is the pattern. The webpack config is using the `css-to-string-loader` 
+to create a CSS string rather than a JavaScript Module containing the CSS (as style-loader 
+would produce).
+ 
+## Results
 
 | Item | Detail |
 | ---- | ------ |
 | Source JS | 448B |
 | Source CSS (SCSS) | 326B |
 | Production Bundle | 22KB |
- 
- ##The Process
-The source files are in a directory named for the component, with the idea being that the 
-build process would capture the directory name and generate the file name. Of course, I didn't 
-actually put that bit in there.
 
-The `ia-card/index.js` file is the entry point and I put no thought into handling it so there
- are no rules in the config for it. No Babel, either. 
- 
-The `ia-card/index.scss` is imported into the JS as a variable and lit-element uses that in the
-static `styles` getter as is the pattern. The webpack config is using the `css-to-string-loader` 
-to create a CSS string rather than a JavaScript faux-Module containing the CSS (as style-loader 
-would produce).
- 
-## Results
- 
-It works on [supported browsers](https://caniuse.com/#search=modules) with no real obvious 
+It works on [supported browsers](https://caniuse.com/#search=modules) with no obvious 
 technical issues. 
 
 ### The Problems
@@ -44,10 +42,9 @@ technical issues.
   
 #### CSS as JS?
  A nastier issue is the CSS. Because I'm using `import`, the generated CSS is being stored in a 
- JavaScript variable. Using he ``csss` ...` `` template tag requires the use of `unsafeCSS`
- surrounding the entire string. This seems like a monumental waste of a method, but I'm not sure
+ JavaScript variable. Using he `css` template tag requires the use of `unsafeCSS()`
+ wrapping the entire string. This seems like a monumental waste, but I'm not sure
  if there's any workaround in this. I may try just returning the variable in a future experiment.
-
 
 ##Final Words
  I'm both encouraged and disappointed by this result. On the one hand, I accomplished the goal: .js
@@ -55,8 +52,7 @@ technical issues.
  
  But on the other hand, this feels like a bit of a failure. I think I'm stuck in the old glory days of
  downloading a library once and using it over and over (who thought I'd look back fondly at jQuery?).
- If I wanted to create a library of reusable components, each individually wrapped, my minimum size is 22K
- for each. 
+ If I wanted to create a library of reusable components, each individually wrapped, my minimum size is 22K each. 
  
  I think I can do better, but at this point I think I have more questions than answers.
    
