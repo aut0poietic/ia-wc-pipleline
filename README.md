@@ -5,7 +5,10 @@ Web Components, here I come. YeeHAW!
 
 But seriously, Web Component scratch a particular hard-to-reach itch of mine that -- well you don't 
 want to hear about that. The long-and-short of it is that I know absolutely nothing about 
-Web Components other than they must be capitalized. 
+Web Components (other than they must be CAPITALIZED). 
+
+I've been working with React for a bit now and after playing around with Web Components, 
+I have this impression of what I want from them:
 
 - **Minimal**<br>What attracted me to Web Components in the first place was the idea
  that I could have a tiny little file that delivered a single, cohesive component. 
@@ -25,30 +28,28 @@ I want to:
 - Generate a minified, single-file Web Component.
 - Drop that same into a WordPress plugin and have Gutenberg edit it's properties, 
 outputting the same component in the content.
-- Add the component into my React+Redux app's generated HTML and let the app manage it's 
+- Add the component into my React+Redux app's JSX and let the app manage it's 
 `children` and `props` with Plain-Old JS objects. 
 - Turn that React+Redux app into a backend, rendering the Web Component like it was everyday HTML.
-
-I don't ask for much, do I?
 
 ## Which brings us to this repo...
 
 For all I know this all just works. Again, I freely admit that I know nothing. 
 
-So this repo is al about finding out what I can do, and how to get there. 
+This repo is al about finding out what I can do and how to get there. 
 Throwing out some brutally honesty: All of this is ignoring the way people are handling 
 Web Components out in the blogosphere. There's crazy good guidance out there, with awesome 
-completely usable pipelines. I am intentionally ignoring them and doing this wrong.
+completely usable pipelines. I am intentionally ignoring them and doing this The Wrong Way™.
 
 **That's okay.** 
 
 The idea is to learn something from doing silly things and maybe catch something useful
 along the way. Right now, I'm leaving nothing off the table that'll get the job done.
  
-Grunt could do this. Sounds fun. Gulp too. Multiple webpack configs? Hah, okay. 
+**Grunt**? Sounds fun. **Gulp** too. Multiple **Webpack** configs? Hah, okay. 
 Summoning eldritch horrors from parallel dimensions in exchange for a constant supply 
-of gerbils? I'm down, can't be any worse than writing custom loaders for webpack, or, you know,
-wrap my head around RollUp. 
+of **gerbils**? I'm down, can't be any worse than writing **custom loaders** for webpack, or, you know,
+wrap my head around **RollUp**. 
 
 ## Experiments
 
