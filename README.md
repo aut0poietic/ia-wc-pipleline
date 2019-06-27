@@ -1,53 +1,60 @@
 # Continuing Misadventures in Web Components 
-*a.k.a. Finding a multi-framework pipleline that doesn't suck.*
+*a.k.a. How I learned to stop worrying about and love the Shadow DOM.*
 
-So I started drinking the Kool-aid: Web Components, here I come. YeeHAW!
+Web Components, here I come. YeeHAW! 
 
-But seriously, Web Component scratch a particular hard-to-reach itch of mine that -- well, 
-no, really you don't want to hear about that crap. Suffice it to say, I want something 
-that's probably going to be a difficult if not impossible to do:
+But seriously, Web Component scratch a particular hard-to-reach itch of mine that -- well you don't 
+want to hear about that. The long-and-short of it is that I know absolutely nothing about 
+Web Components other than they must be capitalized. 
 
 - **Minimal**<br>What attracted me to Web Components in the first place was the idea
  that I could have a tiny little file that delivered a single, cohesive component. 
- No massive-honking React Bundle with Babel-infused helpers. Standards, Baby!
+ No massive, browser-crushing bundle with Babel-infused helpers.
 - **Separate but Compatible**<br>But for all that the Web Components I create must live 
- within whatever framework I choose. Web Components MUST be first-class citizens. No, I 
+ within whatever framework I choose. Web Components **must** be first-class citizens. No, I 
  don't want React to consume and convert.  If I use a framework it needs to believe, 
- with all it's little over-engineered heart that my Web Component is nothing more 
- than a native HTML tag. 
+ with all it's heart that my Web Component is nothing more than a native HTML tag. 
 - **code-in-code**<br>Look, I get that many people enjoy shoving the kitchen sink in their
-.js files or enjoy having a massive monolith of a file. I wish them the very best. Me, 
-well, I'd rather snorkel in a stopped-up toilet 
-after bean burrito breakfast at the International Irritable Bowel convention. I want my
-css in my .css (though I do enjoy a little SASS).
+.js files or work with CSS, JS, HTML and other stuff in a single file. I wish them the very best. 
+Me, well, not so much. I want my CSS in my `.css` (though I do enjoy a little SASS from
+time to time).
 
 The bottom line is this: I want to write these things my way _(even if it's stupid)_. 
+I want to: 
 
-I want to be able to generate a Web Component and drop it into a WordPress plugin
-and have Gutenberg both use and save the resulting component. Then I want to 
-take the same component and drop it into an Electron project and it just work. 
-Then for an encore I want to shove React into that Electron app and have it 
-feed Plain-Old-JS objects into the same Web Component. Then just to push my luck, 
-that same Electron app should be able to render it back down to the original Web 
-Component HTML.  
- 
+- Generate a minified, single-file Web Component.
+- Drop that same into a WordPress plugin and have Gutenberg edit it's properties, 
+outputting the same component in the content.
+- Add the component into my React+Redux app's generated HTML and let the app manage it's 
+`children` and `props` with Plain-Old JS objects. 
+- Turn that React+Redux app into a backend, rendering the Web Component like it was everyday HTML.
+
+I don't ask for much, do I?
+
 ## Which brings us to this repo...
 
-These are my ongoing experiments in building something that will pull this off. Let's be
-brutally honest: Most of this is ignoring the way people are handling WC's and doing
-things that are bat-guano-crazy. 
+For all I know this all just works. Again, I freely admit that I know nothing. 
+
+So this repo is al about finding out what I can do, and how to get there. 
+Throwing out some brutally honesty: All of this is ignoring the way people are handling 
+Web Components out in the blogosphere. There's crazy good guidance out there, with awesome 
+completely usable pipelines. I am intentionally ignoring them and doing this wrong.
 
 **That's okay.** 
 
-The idea is to learn something from doing stupid things and maybe catch something useful
-along the way. Right now, I'm leaving nothing off the table that'll get the job done. 
-Sure, Grunt could do this. Sounds fun. Gulp too. Multiple webpack configs? Hah, okay. 
+The idea is to learn something from doing silly things and maybe catch something useful
+along the way. Right now, I'm leaving nothing off the table that'll get the job done.
+ 
+Grunt could do this. Sounds fun. Gulp too. Multiple webpack configs? Hah, okay. 
 Summoning eldritch horrors from parallel dimensions in exchange for a constant supply 
-of gerbils? I'm down, can't be any worse than writing custom loaders for webpack.
+of gerbils? I'm down, can't be any worse than writing custom loaders for webpack, or, you know,
+wrap my head around RollUp. 
 
 ## Experiments
 
-### A Dirt-Dumb webpack Single WC
+So Here they are&mdash;The Experiments&mdash;in order:
+
+### A lit-element WC with minimal Webpack
  [webpack-stupid-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/webpack-stupid-wc) is my first attempt at creating a single file, fully enclosed 
  Web Component based on LitElement. It works, but that's about all I can say for it.
 
