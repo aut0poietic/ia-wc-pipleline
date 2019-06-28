@@ -57,3 +57,7 @@ So Here they are&mdash;The Experiments&mdash;in order:
  [webpack-stupid-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/webpack-stupid-wc) is my first attempt at creating a single file, fully enclosed 
  Web Component based on LitElement. It works, but that's about all I can say for it.
 
+### A minimal, native Web Component with Webpack
+ [webpack-simple-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/webpack-simple-wc) is a reduced attempt
+  at creating a single file, fully enclosed Web Component using native JavaScript. It demonstrates that Webpack is
+  probably not the way forward.
