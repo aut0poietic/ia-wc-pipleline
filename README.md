@@ -51,13 +51,30 @@ Or, you know, wrapping my head around **RollUp**.
 
 ## Experiments
 
-So Here they are&mdash;The Experiments&mdash;in order:
+### Build Experiments
 
-### A lit-element Web Component with minimal Webpack
+#### A minimal lit-element Web Component with Webpack
  [webpack-stupid-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/webpack-stupid-wc) is my first attempt at creating a single file, fully enclosed 
  Web Component based on LitElement. It works, but that's about all I can say for it.
 
-### A minimal, native Web Component with Webpack
+#### A minimal native Web Component with Webpack
  [webpack-simple-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/webpack-simple-wc) is a reduced attempt
   at creating a single file, fully enclosed Web Component using native JavaScript. It demonstrates that Webpack is
   probably not the way forward.
+  
+#### A minimal, native Web Compoent with RollUp
+ [rollup-simple-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/rollup-simple-wc) is a reduced attempt
+  at creating a single file, fully enclosed Web Component using native JavaScript. It's the first result that gives me
+  some hope that my stupid idea isn't so stupid. Er, at least possible; It could still be stupid.
+
+#### Native Web Component with RollUp and External CSS
+ [rollup-ex-css-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/rollup-ex-css) is a working, nearly
+ complete config. Webpack convinced me inlining the CSS would be hard. RollUp did it without any effort.
+
+### Component Experiments
+> There's nothing here yet&hellip; Still looking for some inspiration.
+
+### Integration Experiments
+
+> Sorry, not there yet. I have to sleep sometime.
+

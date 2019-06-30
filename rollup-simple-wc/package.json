@@ -1,0 +1,21 @@
+{
+  "name": "webpack-stupid-wc",
+  "version": "1.0.0",
+  "description": "A really stupid attempt...s",
+  "main": "src/ia-card/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "serve": "http-server ./dist"
+  },
+  "author": "aut0poietic",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "rollup": "^1.16.3",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-terser": "^5.0.0"
+  },
+  "dependencies": {
+    "lit-element": "^2.2.0"
+  }
+}
