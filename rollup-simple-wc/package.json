@@ -1,5 +1,5 @@
 {
-  "name": "webpack-stupid-wc",
+  "name": "rollup-simple-wc",
   "version": "1.0.0",
   "description": "A really stupid attempt...s",
   "main": "src/ia-card/index.js",
@@ -15,7 +15,5 @@
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-terser": "^5.0.0"
   },
-  "dependencies": {
-    "lit-element": "^2.2.0"
-  }
+  "dependencies": {}
 }

@@ -70,6 +70,11 @@ Or, you know, wrapping my head around **RollUp**.
 #### Native Web Component with RollUp and External CSS
  [rollup-ex-css-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/rollup-ex-css) is a working, nearly
  complete config. Webpack convinced me inlining the CSS would be hard. RollUp did it without any effort.
+ 
+#### Lit-Element Web Component with RollUp and External CSS
+ [rollup-lit-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/rollup-lit-wc) takes us back to 
+ lit-element and a similar setup to `webpack-stupid-wc`. Result is nearly identical, but with 100% less `eval` from 
+ RollUp as there is Webpack.
 
 ### Component Experiments
 > There's nothing here yet&hellip; Still looking for some inspiration.

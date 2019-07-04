@@ -1,4 +1,4 @@
-# An Reduced, Native Web Component Attempt
+# A Reduced, Native Web Component Attempt
 
  This directory contains an attempt to build a vanilla JS Web Component with
  webpack.
