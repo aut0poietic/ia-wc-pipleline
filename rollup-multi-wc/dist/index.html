@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+	<title>Multi Component Rollup Test</title>
+	<script src="ia-card.js" type="module" async></script>
+	<script src="ia-toggle.js" type="module" async></script>
+	<style>
+		html {
+			font-size: 67.5%;
+		}
+
+		body {
+			font-size: 1.6rem;
+		}
+
+		.grid {
+			box-sizing: border-box;
+			display: flex;
+			flex: 0 1 auto;
+			flex-direction: row;
+			width: 100%;
+			margin: 2rem 2rem;
+		}
+
+		.column {
+			box-sizing: border-box;
+			width: 50%;
+			padding: 2rem;
+		}
+
+		ia-toggle {
+			--ia-toggle-size: 20px;
+			--ia-toggle-background-color: #f1f1f1;
+			--ia-toggle-color: #999;
+			--ia-toggle-highlight: #0e8c11;
+		}
+
+		ia-card {
+			max-width: 100%;
+		}
+	</style>
+	<script>
+		(function () {
+			window.addEventListener('DOMContentLoaded', function () {
+				document.querySelector('ia-toggle').addEventListener('change', function (e) {
+					document.querySelector('ia-card').setAttribute('title', e.target.checked ? 'Hello' : 'Goodbye')
+				});
+			});
+		}());
+	</script>
+</head>
+<body>
+<section class="grid">
+	<div class="column">
+		<ia-card title="Hello">
+			<div>Hello world!</div>
+		</ia-card>
+	</div>
+	<div class="column">
+		<ia-toggle label="Say Hello?" checked/>
+	</div>
+</section>
+
+</body>
+</html>

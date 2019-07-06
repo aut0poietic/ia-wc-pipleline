@@ -75,6 +75,10 @@ Or, you know, wrapping my head around **RollUp**.
  [rollup-lit-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/rollup-lit-wc) takes us back to 
  lit-element and a similar setup to `webpack-stupid-wc`. Result is nearly identical, but with 100% less `eval` from 
  RollUp as there is Webpack.
+ 
+ #### Multiple, Native Web Components in Individual Files
+  [rollup-multi-wc](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/rollup-multi-wc) refines the process
+  to create two web components packaged by RollUp. Pretty happy with this result. 
 
 ### Component Experiments
 > There's nothing here yet&hellip; Still looking for some inspiration.

@@ -1,0 +1,87 @@
+:host {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  --ia-toggle-size: 20px;
+  --ia-toggle-background-color: #f1f1f1;
+  --ia-toggle-color: #888;
+  --ia-toggle-highlight: #afb4ff;
+  --ia-toggle-animation-duration: 0.1s;
+}
+
+:host[hidden] {
+  display: none;
+}
+
+.toggle-button {
+  position: relative;
+  box-sizing: border-box;
+  height: var(--ia-toggle-size, 20px);
+  width: calc(var(--ia-toggle-size, 20px) * 2);
+  margin-right: 1rem;
+  background-color: var(--ia-toggle-background-color, #f1f1f1);
+  border: calc(var(--ia-toggle-size, 20px) / 10) solid var(--ia-toggle-color, #888);
+  padding: calc(var(--ia-toggle-size, 20px) / 10);
+  border-radius: calc(var(--ia-toggle-size, 20px) / 2);
+}
+
+.toggle-button:before {
+  content: "";
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: calc(var(--ia-toggle-size, 20px) / 2 + var(--ia-toggle-size, 20px) / 10);
+  height: calc(var(--ia-toggle-size, 20px) / 2 + var(--ia-toggle-size, 20px) / 10);
+  background-color: var(--ia-toggle-color, #888);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.toggle-button:after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  right: calc(var(--ia-toggle-size, 20px) / 5);
+  top: calc(var(--ia-toggle-size, 20px) / 5);
+  display: block;
+  width: calc(var(--ia-toggle-size, 20px) / 2.5);
+  height: calc(var(--ia-toggle-size, 20px) / 2.5);
+  border: 2px solid var(--ia-toggle-color, #888);
+  background-color: transparent;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.toggle-button[aria-checked="true"] {
+  background-color: var(--ia-toggle-highlight, #afb4ff);
+}
+
+.toggle-button[aria-checked="true"]:before {
+  transform: translate(calc(var(--ia-toggle-size, 20px)));
+  background-color: var(--ia-toggle-background-color, #f1f1f1);
+}
+
+.toggle-button[aria-checked="true"]:after {
+  transform: translate(calc(var(--ia-toggle-size, 20px) * -1));
+  border-color: transparent transparent transparent var(--ia-toggle-background-color, #f1f1f1);
+  width: calc(var(--ia-toggle-size, 20px) / 10);
+  border-radius: 0;
+}
+
+.toggle-button.ani {
+  transition: background-color var(--ia-toggle-animation-duration, 0.1s) linear var(--ia-toggle-animation-duration, 0.1s);
+}
+
+.toggle-button.ani:before {
+  transition: transform var(--ia-toggle-animation-duration, 0.1s) linear, background-color var(--ia-toggle-animation-duration, 0.1s) linear var(--ia-toggle-animation-duration, 0.1s);
+}
+
+.toggle-label {
+  box-sizing: border-box;
+}
+
+
