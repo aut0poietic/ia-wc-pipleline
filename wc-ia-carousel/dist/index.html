@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+	<title>Image Carousel Component</title>
+	<script src="ia-carousel.js" type="module" async></script>
+	<style>
+		html {
+			line-height: 1.15;
+			-webkit-text-size-adjust: 100%;
+			font-size: 67.5%;
+		}
+
+		body {
+			margin: 0;
+			font-size: 1.6rem;
+		}
+
+		.grid {
+			box-sizing: border-box;
+			display: flex;
+			flex: 0 1 auto;
+			flex-direction: row;
+			margin: 2rem 2rem;
+		}
+
+		.column {
+			box-sizing: border-box;
+			flex: 1;
+			padding: 2rem;
+		}
+
+		ia-carousel {
+			max-width: 72rem;
+			height: 36rem;
+		}
+	</style>
+</head>
+<body>
+<section class="grid">
+	<div class="column">
+		<ia-carousel buttons navigation>
+			<ia-carousel-slide name="Anthracene" alt="a starry sky over snow-capped mountains." src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=780&h=386&fit=crop&ixid=eyJhcHBfaWQiOjF9"></ia-carousel-slide>
+			<ia-carousel-slide name="Hamartia" alt="a fiery sunset on the ocean." src="https://images.unsplash.com/photo-1547532182-bf296f6be875?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=780&h=386&fit=crop&ixid=eyJhcHBfaWQiOjF9"></ia-carousel-slide>
+			<ia-carousel-slide name="Usufruct" alt="a sandy peninsula through cyan sea." src="https://images.unsplash.com/photo-1540202404-d0c7fe46a087?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=780&h=386&fit=crop&ixid=eyJhcHBfaWQiOjF9"></ia-carousel-slide>
+			<ia-carousel-slide name="Rialto" alt="the milkyway above desert sands." src="https://images.unsplash.com/photo-1560492027-5a1f8d2123ba?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=780&h=386&fit=crop&ixid=eyJhcHBfaWQiOjF9"></ia-carousel-slide>
+		</ia-carousel>
+	</div>
+</section>
+
+</body>
+</html>

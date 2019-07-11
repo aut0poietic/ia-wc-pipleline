@@ -1,0 +1,58 @@
+:host {
+  contain: content;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+:host[hidden] {
+  display: none;
+}
+
+:host .slide-header {
+  position: absolute;
+  box-sizing: border-box;
+  display: block;
+  top: 0;
+  left: 0;
+  width: var(--ia-carousel-split, 24rem);
+  height: 100%;
+  padding: 2rem;
+  /*border-right: 1px solid #333;*/
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: unset;
+}
+
+:host .slide {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: var(--ia-carousel-split, 24rem);
+  display: block;
+  width: calc(100% - var(--ia-carousel-split, 24rem));
+  height: 100%;
+  padding: 2rem;
+  background-color: #999;
+  background-position: calc(var(--ia-carousel-split, 24rem) * -1) 0;
+  background-repeat: no-repeat;
+  background-size: unset;
+}
+
+:host .alt {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}
