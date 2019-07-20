@@ -32,6 +32,9 @@ class IACarouselSlide extends HTMLElement {
 	}
 
 	attributeChangedCallback(name, oldValue, newValue) {
+		if (oldValue === newValue) {
+			return;
+		}
 		if (name === 'name') {
 			this.shadowRoot.querySelector('.slide-title').innerText = newValue;
 		}

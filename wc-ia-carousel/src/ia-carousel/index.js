@@ -3,9 +3,16 @@ import html from './index.html';
 const template = document.createElement('template');
 template.innerHTML = `<style>${style}</style>${html}`;
 
+const keys = {
+	end  : 35,
+	home : 36,
+	left : 37,
+	right: 39
+};
+
 class IACarousel extends HTMLElement {
 	static get observedAttributes() {
-		return ['buttons', 'navigation'];
+		return ['buttons', 'navigation', 'index'];
 	}
 
 	get buttons() {
@@ -16,30 +23,94 @@ class IACarousel extends HTMLElement {
 		return this.hasAttribute('navigation');
 	}
 
+	get index() {
+		return parseInt(this.getAttribute('index'), 10);
+	}
+
+	set index(value) {
+		this.setAttribute('index', value);
+	}
+
 	constructor() {
 		super();
 		this.attachShadow({mode: 'open'});
 		this.shadowRoot.appendChild(template.content.cloneNode(true));
-		this._tablist = this.shadowRoot.querySelector('.bullets');
+		// The attributeChangedCallback is called before connected callback
+		// when the wc has default attributes, so the tablist must have a value early.
+		this._tablist = this.shadowRoot.querySelector('[role="tablist"]');
 	}
 
 	connectedCallback() {
-		if (!this.hasAttribute('role')) {
+		// The inner `.carousel` element should contain the aria roles/props/states.
+		// so I remove or transfer the properties.
+		if (this.hasAttribute('role')) {
 			this.shadowRoot.querySelector('.carousel').setAttribute('role', this.getAttribute('role'));
 			this.removeAttribute('role');
 		}
-		// this should override any page specified value.
 		this.removeAttribute('aria-roledescription');
+		// In order to function, this carousel needs a default index.
+		if (!this.hasAttribute('index')) {
+			this.setAttribute('index', 0);
+		}
+		this.shadowRoot.querySelector('slot').addEventListener('slotchange', this.onSlotChanged.bind(this));
+		this._tablist.addEventListener('keydown', this.tablist_onKeyDown.bind(this));
+		this._tablist.addEventListener('keyup', this.tablist_onKeyUp.bind(this));
+		this._tablist.addEventListener('click', this.tablist_click.bind(this));
+		this.shadowRoot.querySelector('.nav-btn.next').addEventListener('click', this.next_click.bind(this));
+		this.shadowRoot.querySelector('.nav-btn.prev').addEventListener('click', this.prev_click.bind(this));
+	}
 
-		console.log(this.shadowRoot.querySelector('slot').assignedElements());
+	tablist_onKeyDown(e) {
+		var key = e.keyCode;
+		switch (key) {
+			case keys.end:
+				event.preventDefault();
+				// Activate last tab
+				this.index = tabs.length - 1;
+				break;
+			case keys.home:
+				event.preventDefault();
+				// Activate first tab
+				this.index = 0;
+				break;
+		}
+	}
+
+	tablist_onKeyUp(e) {
+		var key = e.keyCode;
+		switch (key) {
+			case keys.left:
+				this.prev_click(e);
+				break;
+			case keys.right:
+				this.next_click(e);
+				break;
+		}
+	}
+
+	tablist_click(e) {
+		if (e.target.tagName.toLowerCase() === 'button') {
+			var tabs = Array.prototype.slice.call(this._tablist.children);
+			this.index = tabs.indexOf(e.target);
+		}
+	}
+
+	next_click(e) {
+		e.preventDefault();
+		this.index = Math.min(this._slides.length - 1, Math.max(0, this.index + 1));
+	}
+
+	prev_click(e) {
+		e.preventDefault();
+		this.index = Math.min(this._slides.length - 1, Math.max(0, this.index - 1));
 	}
 
 	attributeChangedCallback(name, oldValue, newValue) {
+		console.log('attributeChanged', name);
 		if (oldValue === newValue) {
 			return;
 		}
-		if (name == 'buttons') {
-			console.log('hey buttons.');
+		if (name === 'buttons') {
 			if (this.buttons) {
 				this._tablist.removeAttribute('hidden');
 			} else {
@@ -50,8 +121,8 @@ class IACarousel extends HTMLElement {
 				lChildren[i].setAttribute('type', (this.buttons ? 'tabpanel' : 'group'))
 			}
 		}
-		if (name == 'navigation') {
-			var buttons = this.shadowRoot.querySelectorAll('button');
+		if (name === 'navigation') {
+			var buttons = this.shadowRoot.querySelectorAll('.nav-btn');
 			for (var i = 0; i < buttons.length; i++) {
 				if (this.navigation) {
 					buttons[i].removeAttribute('hidden');
@@ -60,6 +131,63 @@ class IACarousel extends HTMLElement {
 				}
 			}
 		}
+		if (name === 'index') {
+			this.handleIndexChange();
+		}
+	}
+
+	handleIndexChange() {
+		if (!this._slides) {
+			return;
+		}
+		var tabs = this._tablist.querySelectorAll('button');
+		var tabHasFocus = this._tablist.querySelector('button:focus') !== null;
+		for (var i = 0; i < this._slides.length; i++) {
+			if (i !== this.index) {
+				this._slides[i].setAttribute('hidden', true);
+				tabs[i].setAttribute('tabindex', -1);
+				tabs[i].setAttribute('aria-selected', "false");
+			}
+		}
+		this._slides[this.index].removeAttribute('hidden');
+		tabs[this.index].setAttribute('tabindex', 0);
+		tabs[this.index].setAttribute('aria-selected', "true");
+		if (tabHasFocus) {
+			tabs[this.index].focus();
+		}
+	}
+
+	onSlotChanged() {
+		this._slides = this.shadowRoot.querySelector('slot').assignedElements();
+		this._tablist.innerHTML = '';
+		for (var i = 0; i < this._slides.length; i++) {
+			var id = "panel-" + i;
+			this._slides[i].setAttribute('aria-label', `slide ${i + 1} of ${this._slides.length}`);
+			if (this._slides[i].hasAttribute('id')) {
+				id = this._slides[i].getAttribute('id');
+			} else {
+				this._slides[i].setAttribute('id', id);
+			}
+			this._tablist.appendChild(
+				this._initButton(
+					this._slides[i].getAttribute('name'),
+					i === this.index,
+					id
+				)
+			);
+		}
+		this.handleIndexChange();
+	}
+
+	_initButton(name, selected, controls) {
+		var bullet = document.createElement('button');
+		bullet.setAttribute('type', 'button');
+		bullet.setAttribute('role', 'tab');
+		bullet.setAttribute('aria-controls', controls);
+		var span = document.createElement('span');
+		span.innerText = name;
+		bullet.appendChild(span);
+		return bullet;
 	}
 }
 

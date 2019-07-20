@@ -1,13 +1,14 @@
 :host {
   --ia-carousel-split: 24rem;
   --ia-carousel-bullet-size: 1rem;
+  --carousel-button-size: 4rem;
   position: relative;
   display: block;
   margin: auto;
 }
 
 :host[hidden] {
-  display: none;
+  display: none !important;
 }
 
 :host .carousel {
@@ -53,4 +54,31 @@
   height: var(--carousel-button-size, 3rem);
   width: var(--carousel-button-size, 3rem);
   fill: #000;
+}
+
+:host [role="tablist"] {
+  text-align: center;
+}
+
+:host [role="tablist"] button {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 50%;
+  background-color: #000;
+  margin: 1rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+:host [role="tablist"] button span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
