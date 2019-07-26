@@ -81,7 +81,12 @@ Or, you know, wrapping my head around **RollUp**.
   to create two web components packaged by RollUp. Pretty happy with this result. 
 
 ### Component Experiments
-> There's nothing here yet&hellip; Still looking for some inspiration.
+
+#### Carousel
+ [ia-carousel](https://github.com/aut0poietic/ia-wc-pipleline/tree/master/wc-ia-carousel) is a carousel (duh) that 
+ has a semi-cool 'cross-cut' animation when changing slides. It's intended as an image carousel and includes
+ a dual accessibility model depending on whether the bullets at the bottom are displayed. See the 
+ [WAI-ARIA Authoring Practices 1.1](https://www.w3.org/TR/wai-aria-practices/) for more information on the two patterns.
 
 ### Integration Experiments
 
