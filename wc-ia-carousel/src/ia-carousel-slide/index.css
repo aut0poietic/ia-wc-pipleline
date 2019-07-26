@@ -1,0 +1,99 @@
+:host {
+  display: block;
+  contain: content;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+:host([hidden]),
+:host([hidden]) .slide,
+:host([hidden]) .slide-header {
+  pointer-events: none;
+}
+
+.slide-header {
+  will-change: transform;
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  top: 0;
+  left: 0;
+  width: var(--ia-carousel-split, 24rem);
+  height: 100%;
+  padding: 2rem;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: unset;
+}
+
+.slide-header .slide-number {
+  font-size: 72px;
+  font-weight: 300;
+  opacity: .3;
+  line-height: 72px;
+}
+
+.slide {
+  will-change: transform;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: var(--ia-carousel-split, 24rem);
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: calc(100% - var(--ia-carousel-split, 24rem));
+  height: 100%;
+  padding: 2rem;
+  background-color: #999;
+  background-position: calc(var(--ia-carousel-split, 24rem) * -1) 0;
+  background-repeat: no-repeat;
+  background-size: unset;
+}
+
+.slide-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 72px;
+}
+
+:host(.anim) .slide,
+:host(.anim) .slide-header {
+  transition: transform .5s cubic-bezier(.25, .8, .25, 1);
+}
+
+:host([hidden].below) .slide {
+  transform: translate(0 -100%);
+}
+
+:host([hidden].below) .slide-header {
+  transform: translate(0 100%);
+}
+
+:host([hidden].above) .slide {
+  transform: translate(0 100%);
+}
+
+:host([hidden].above) .slide-header {
+  transform: translate(0 -100%);
+}
+
+.alt {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}
