@@ -10,9 +10,10 @@
   overflow: hidden;
 }
 
+:host([hidden]),
 :host([hidden]) .slide,
 :host([hidden]) .slide-header {
-  /*visibility: hidden;*/
+  pointer-events: none;
 }
 
 .slide-header {
