@@ -6,7 +6,7 @@ template.innerHTML = `<style>${style}</style>${html}`;
 class IACarouselSlide extends HTMLElement {
 
 	static get observedAttributes() {
-		return ['name', 'src', 'alt', 'type'];
+		return ['name', 'src', 'alt', 'type', 'number'];
 	}
 
 	get type() {
@@ -47,6 +47,9 @@ class IACarouselSlide extends HTMLElement {
 		}
 		if (name === 'type') {
 			this._slide.setAttribute('role', this.type);
+		}
+		if (name === 'number') {
+			this._header.querySelector('.slide-number').innerText = newValue.toString().padStart(2, '0');
 		}
 	}
 }

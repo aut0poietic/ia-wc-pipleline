@@ -38,6 +38,8 @@ class IACarousel extends HTMLElement {
 		// The attributeChangedCallback is called before connected callback
 		// when the wc has default attributes, so the tablist must have a value early.
 		this._tablist = this.shadowRoot.querySelector('[role="tablist"]');
+		this._next = this.shadowRoot.querySelector('.nav-btn.next');
+		this._prev = this.shadowRoot.querySelector('.nav-btn.prev');
 	}
 
 	connectedCallback() {
@@ -56,8 +58,8 @@ class IACarousel extends HTMLElement {
 		this._tablist.addEventListener('keydown', this.tablist_onKeyDown.bind(this));
 		this._tablist.addEventListener('keyup', this.tablist_onKeyUp.bind(this));
 		this._tablist.addEventListener('click', this.tablist_click.bind(this));
-		this.shadowRoot.querySelector('.nav-btn.next').addEventListener('click', this.next_click.bind(this));
-		this.shadowRoot.querySelector('.nav-btn.prev').addEventListener('click', this.prev_click.bind(this));
+		this._next.addEventListener('click', this.next_click.bind(this));
+		this._prev.addEventListener('click', this.prev_click.bind(this));
 	}
 
 	tablist_onKeyDown(e) {
@@ -106,7 +108,6 @@ class IACarousel extends HTMLElement {
 	}
 
 	attributeChangedCallback(name, oldValue, newValue) {
-		console.log('attributeChanged', name);
 		if (oldValue === newValue) {
 			return;
 		}
@@ -132,28 +133,44 @@ class IACarousel extends HTMLElement {
 			}
 		}
 		if (name === 'index') {
-			this.handleIndexChange();
+			this.handleIndexChange(oldValue);
 		}
 	}
 
-	handleIndexChange() {
+	handleIndexChange(oldIndex) {
 		if (!this._slides) {
 			return;
 		}
 		var tabs = this._tablist.querySelectorAll('button');
 		var tabHasFocus = this._tablist.querySelector('button:focus') !== null;
 		for (var i = 0; i < this._slides.length; i++) {
+			this._slides[i].classList.remove('above', 'below', 'anim');
 			if (i !== this.index) {
 				this._slides[i].setAttribute('hidden', true);
+				this._slides[i].classList.add(i > this.index ? 'below' : 'above');
 				tabs[i].setAttribute('tabindex', -1);
 				tabs[i].setAttribute('aria-selected', "false");
 			}
 		}
+		if (oldIndex && this._slides[oldIndex]) {
+			this._slides[oldIndex].classList.add('anim');
+		}
+		this._slides[this.index].classList.add('anim');
 		this._slides[this.index].removeAttribute('hidden');
 		tabs[this.index].setAttribute('tabindex', 0);
 		tabs[this.index].setAttribute('aria-selected', "true");
 		if (tabHasFocus) {
 			tabs[this.index].focus();
+		}
+		if (this.index == 0) {
+			this._prev.setAttribute('disabled', true);
+		} else {
+			this._prev.removeAttribute('disabled');
+		}
+		if (this.index == this._slides.length - 1) {
+			this._next.setAttribute('disabled', true);
+		} else {
+			this._next.removeAttribute('disabled');
 		}
 	}
 
@@ -163,23 +180,18 @@ class IACarousel extends HTMLElement {
 		for (var i = 0; i < this._slides.length; i++) {
 			var id = "panel-" + i;
 			this._slides[i].setAttribute('aria-label', `slide ${i + 1} of ${this._slides.length}`);
+			this._slides[i].setAttribute('number', i + 1);
 			if (this._slides[i].hasAttribute('id')) {
 				id = this._slides[i].getAttribute('id');
 			} else {
 				this._slides[i].setAttribute('id', id);
 			}
-			this._tablist.appendChild(
-				this._initButton(
-					this._slides[i].getAttribute('name'),
-					i === this.index,
-					id
-				)
-			);
+			this._tablist.appendChild(this._initButton(this._slides[i].getAttribute('name'), id));
 		}
 		this.handleIndexChange();
 	}
 
-	_initButton(name, selected, controls) {
+	_initButton(name, controls) {
 		var bullet = document.createElement('button');
 		bullet.setAttribute('type', 'button');
 		bullet.setAttribute('role', 'tab');
