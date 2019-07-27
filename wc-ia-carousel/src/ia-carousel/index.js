@@ -124,6 +124,7 @@ class IACarousel extends HTMLElement {
 		}
 		if (name === 'navigation') {
 			var buttons = this.shadowRoot.querySelectorAll('.nav-btn');
+			console.log(buttons)
 			for (var i = 0; i < buttons.length; i++) {
 				if (this.navigation) {
 					buttons[i].removeAttribute('hidden');
