@@ -3,8 +3,348 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Unfortunate Web Components Misadventures</title>
+	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,400i,700|Teko:400,700&display=optional" rel="stylesheet">
+	<style>
+		*, *:before, *:after {
+			box-sizing: inherit;
+		}
+
+		html {
+			box-sizing: border-box;
+			width: 100%;
+			height: 100vh;
+			margin: 0;
+			padding: 0;
+			font-size: 62.5%;
+		}
+
+		body {
+			width: 100%;
+			height: 100vh;
+			margin: 0;
+			padding: 0;
+			font-size: 1.6rem;
+			font-family: 'Montserrat', sans-serif;
+			font-weight: 400;
+			overflow: hidden;
+			background-color: #261025;
+			background-image: linear-gradient(to right bottom, #2f152e, #2a1229, #250f25, #210b20, #1d051c);
+		}
+
+		.wrapper {
+			height: 100vh;
+			clip-path: polygon(0 12vh, 100% 3vh, 100% 100%, 0% 100%);
+		}
+
+		.bg {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+		}
+
+		main {
+			position: relative;
+			z-index: 1;
+			margin-left: 40vw;
+			padding: 1px 4.8rem 2.4rem;
+			font-weight: 400;
+			line-height: 2;
+			color: #fff;
+			height: 100%;
+			overflow-y: scroll;
+			/*scroll-behavior: smooth;*/
+		}
+
+		@media (max-width: 980px) {
+			main {
+				margin-left: 25vw;
+			}
+		}
+
+		@media (max-width: 800px) {
+			main {
+				margin-left: 15vw;
+			}
+		}
+
+		@media (max-width: 600px) {
+			main {
+				margin-left: 0;
+				background-color: rgba(0, 0, 0, 0.5);
+				padding-bottom: 10vh;
+			}
+
+			.wrapper {
+				clip-path: polygon(0 12vh, 100% 3vh, 100% 94vh, 0% 90vh);
+			}
+		}
+
+		header {
+			height: 100vh;
+		}
+
+		h1, h2, h3, h4 {
+			font-family: 'Teko', sans-serif;
+			font-weight: 400;
+		}
+
+		.small {
+			font-size: 1.2rem;
+			font-weight: 300;
+			font-family: 'Montserrat', sans-serif;
+		}
+
+		h1 {
+			position: relative;
+			font-size: 5.8rem;
+			margin-top: 30vh;
+			font-weight: 700;
+		}
+
+		h1 .small {
+			position: absolute;
+			top: 1.6rem;
+			left: 15rem;
+			display: block;
+			font-size: 1.3rem;
+			font-weight: 400;
+		}
+
+		header > aside {
+			text-align: right;
+			font-size: 1.4rem;
+			color: #917b90;
+		}
+
+		h2 {
+			font-size: 3.2rem;
+		}
+
+		h2 > .small {
+			position: relative;
+			top: -0.4rem;
+			display: inline-block;
+			height: 3.2rem;
+			line-height: 3.2rem;
+			padding: 0 0.4rem;
+			border-right: 0.2rem solid #917b90;
+			margin-right: 0.4rem;
+		}
+
+		main a {
+			color: #f2b658;
+			text-decoration-color: #917b90;
+			transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+		}
+
+		main a:hover,
+		main a:focus {
+			color: #f2cd88;
+			text-decoration-color: #fff;
+		}
+
+		main a[name] {
+			display: block;
+			position: relative;
+			top: -9vh;
+			visibility: hidden;
+		}
+
+		.lead {
+			font-weight: 100;
+			font-size: 2rem;
+		}
+
+		.mute {
+			color: #917b90;
+		}
+
+		.pullquote {
+			position: relative;
+			float: right;
+			padding: 3.2rem;
+			margin: 1.6rem 0 1.6rem 1.6rem;
+			font-size: 1.8rem;
+			max-width: 40%;
+			text-align: center;
+			font-style: italic;
+		}
+
+		.pullquote span {
+			position: relative;
+			z-index: 3;
+		}
+
+		.pullquote:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			z-index: 2;
+			background-color: rgba(98, 42, 65, 0.96);
+			clip-path: polygon(0 1.2rem, 100% .3rem, 100% 99%, 0% 90%);
+		}
+
+		.pullquote:after {
+			content: "";
+			position: absolute;
+			top: -1.3rem;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			z-index: 1;
+			background-color: rgb(210, 124, 84);
+			clip-path: polygon(2rem 0.2rem, 100% 3rem, 100% 94%, 0% 100%);
+		}
+
+		ul.list-none {
+			list-style: none;
+		}
+	</style>
 </head>
 <body>
+<svg class="bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+	<defs>
+		<filter id="a" x="-20%" y="-20%" width="200%" height="200%">
+			<feDropShadow dx="40" dy="-10" stdDeviation="10" flood-color="#00000010"/>
+		</filter>
+	</defs>
+	<path fill="#622A41" d="M274.73 1080H68.56L454.08 0H1117L274.73 1080z" filter="url(#a)"/>
+	<path fill="#9F4D50" d="M721.43 1080H213.55V0h218.74l289.14 1080z" filter="url(#a)"/>
+	<path fill="#D27C54" d="M-1 734V0h936.97L-1 734z" filter="url(#a)"/>
+	<path fill="#F2B658" d="M497.66 1080H-.16V0l497.82 1080z" filter="url(#a)"/>
+</svg>
+<div class="wrapper">
+	<main>
+		<header>
+			<h1><span class="small">Unfortunate Misadventures in</span>Web Components</h1>
+			<aside>&mdash;or How I learned to stop worrying about and love the Shadow DOM.</aside>
+		</header>
+		<section>
+			<a name="01"></a>
+			<h2><span class="small">01</span> What is this about?</h2>
+			<p class="lead">
+				So apparently, there are these things called <em>Web Components.</em>
+			</p>
+			<p>
+				Who knew&hellip;
+			</p>
+			<p>
+				What with all the <em>React's</em>, <em>Vue's</em> and <em>Svelte's</em> (oh, my) I think I could be
+				forgiven for not paying attention, despite the apparent controversies.
+			</p>
+			<p>
+				This year, I began planning a fairly complex project: A special-purpose &quot;static site generator&quot;
+				with an interactive visual editor. The editor was design to create something not unlike a visual novel
+				&mdash; heavy on the animation and inactivity; dynamic, branching story lines; a pluggable system for
+				adding new elements and templates. Oh, and it had to communicate via a standardized specification.
+			</p>
 
+			<p>
+				ReactJS was the first and obvious choice for creating this. However I quickly ran into issues. I found
+				myself falling down a rabbit hole of react running react running react&hellip; When my experimental
+				projects started weighing in at multiple MB, I realized React was not the way forward for the static
+				site. Many of my target audience had project size quotas of under 4MB.
+			</p>
+			<aside class="pullquote"><span>I landed on VanillaJS for it's speed and size.</span></aside>
+			<p>
+				I entertained the others briefly but landed on VanillaJS for the static site and React for the editor
+				itself. But having experienced the speed of development that React and similar tools allow, I had a hard
+				time stomaching the idea of developing the entire project without some form of reactive framework. I
+				started looking around for smaller so-called &quot;micro-frameworks&quot; to see if I could ease the
+				transition and stumbled onto <a href="https://lit-element.polymer-project.org/" target="_blank">LitElement</a>
+				and Web Components.
+			</p>
+			<p>
+				The idea was that I could build pre-built web components as plugins that are already in their final
+				state -- all the editor has to do is provide the data/children. There are some fairly significant
+				technical hurdles (like teaching the editor what properties & children are valid and what values they
+				accept), but if React can treat a Web Component tag like any other HTML tag, the entire project just
+				became significantly easier to build.
+			</p>
+			<p>
+				The problem is that I came to this from LitElement's (and to a lesser extent, React's) perspective. I
+				know nothing about Web Components as a technology, how they work, how they live nor whether they're
+				viable. There are a lot of opinions on what components are and what they're useful for or whether
+				they're useful at all.
+			</p>
+			<p>
+				Blindly accepting the opinions of the peanut gallery seems like a bad idea. What's a developer to do?
+			</p>
+		</section>
+		<section>
+			<a name="02"></a>
+			<h2><span class="small">02</span> Throwing it All Away</h2>
+			<p class="lead">
+				This repo is a series of simple experiments for me to explore developing web components to solve the
+				needs of the project I described above.
+			</p>
+			<p>
+				I assume nothing, throwing out every shred of conventional wisdom, every so-called best practice and all
+				of the words of any venerated expert.
+			</p>
+			<p>
+				I am intentionally re-treading ground, often doing things that are completely, mind-bogglingly moronic.
+			</p>
+			<p>
+				This is all so I can produce components that:
+			</p>
+			<ul>
+				<li>
+					Generate self-contained components that can be used anywhere with no dependencies that are extremely
+					small.
+				</li>
+				<li>
+					Identify the build tooling to allow for one-component-per-js-file, with multiple components living
+					in the same project.
+				</li>
+				<li>
+					Refine the tooling to allow for writing CSS, JavaScript and HTML in their own files (no
+					CSS/HTML-in-JS) that are bundled into a single component file with no overhead.
+				</li>
+				<li>
+					Standardize the tooling and configuration so it can live happily within another framework's build
+					config transparently.
+				</li>
+				<li>
+					Utilize the component as content within another application built with React, Vue or Svelte as if it
+					were any other HTML tag. This requires that the parent application manipulate the attributes and
+					children of the components naturally.
+				</li>
+				<li>
+					Augment the components with compatible technologies: Workers, Assembly, whatever.
+				</li>
+				<li>
+					Fail, publicly.
+				</li>
+				<li>
+					Have fun building silly experiments I don't ordinarily get to do at the Day Job&trade;.
+				</li>
+			</ul>
+			<p>
+				As I've progressed in this, I've divided the experiments up into sections:
+			</p>
+			<ul class="list-none">
+				<li>
+					<strong>Build</strong>
+					<div>&mdash;Experiments trying to muddle my way towards the build-related goals.</div>
+				</li>
+				<li>
+					<strong>Components</strong>
+					<div>&mdash;Experiments in building reusable, self-contained components.</div>
+				</li>
+				<li>
+					<strong>Integration</strong>
+					<div>&mdash;Create React/Vue/Svelte applications that consume the base components.</div>
+				</li>
+			</ul>
+		</section>
+	</main>
+</div>
 </body>
 </html>
