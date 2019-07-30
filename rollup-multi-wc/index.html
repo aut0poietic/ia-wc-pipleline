@@ -1,41 +1,55 @@
 <!doctype html>
 <html>
 <head>
-	<title>Multi Component Rollup Test</title>
+	<title>RollUp LitElement with External CSS</title>
+	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preload" href="ia-card.js" as="script" crossorigin="anonymous">
+	<link rel="preload" href="ia-toggle.js" as="script" crossorigin="anonymous">
 	<script src="ia-card.js" type="module" async></script>
 	<script src="ia-toggle.js" type="module" async></script>
-	<style>
-		html {
-			font-size: 67.5%;
+	<link href="//fonts.googleapis.com/css?family=Rajdhani:300,700&display=swap" rel="stylesheet">
+	<style id="theme-styles">
+		*, *:before, *:after { box-sizing: inherit; }
+		html { box-sizing: border-box; width: 100%; height: 100vh; margin: 0; padding: 0; font-size: 62.5%; }
+		body { width: 100%; height: 100vh; margin: 0; padding: 0; font-size: 1.6rem; font-family: 'Montserrat', sans-serif; font-weight: 400; overflow: hidden; background-color: #261025; background-image: linear-gradient(to right bottom, #2f152e, #2a1229, #250f25, #210b20, #1d051c); }
+		.wrapper { height: 100vh; clip-path: polygon(0 12vh, 100% 3vh, 100% 100%, 0% 100%); }
+		.bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; }
+		main { position: relative; z-index: 1; padding: 0.1rem 0.1rem 2.4rem 40vw; font-weight: 400; line-height: 2; color: #fff; height: 100%; overflow-y: scroll; overflow-x: hidden; }
+		main.scrollbehavior { scroll-behavior: smooth; }
+		@media (max-width: 980px) {
+			main { padding-left: 25vw; }
 		}
-
-		body {
-			font-size: 1.6rem;
+		@media (max-width: 800px) {
+			main { padding-left: 15vw; }
 		}
-
-		.grid {
-			box-sizing: border-box;
-			display: flex;
-			flex: 0 1 auto;
-			flex-direction: row;
-			width: 100%;
-			margin: 2rem 2rem;
+		@media (max-width: 720px) {
+			main { padding-left: 0; padding-bottom: 10vh; }
 		}
-
-		.column {
-			box-sizing: border-box;
-			width: 50%;
-			padding: 2rem;
+		header.doc-header, section { padding: 1rem 4.8rem 0; }
+		header.doc-header { height: 100vh; }
+		h1, h2, h3, h4 { font-family: 'Teko', sans-serif; font-weight: 400; }
+		.small { font-size: 1.2rem; font-weight: 300; font-family: 'Montserrat', sans-serif; }
+		h1 { font-size: 3.2rem; }
+		h1 .small { position: relative; top: -0.4rem; display: inline-block; height: 3.2rem; line-height: 3.2rem; padding: 0 0.4rem; border-right: 0.2rem solid #917b90; margin-right: 0.4rem; }
+		header > aside { text-align: right; font-size: 1.4rem; color: #917b90; }
+		.grid { box-sizing: border-box; display: flex; flex-wrap: wrap; flex: 0 1 auto; flex-direction: row; height: 100%; padding: 2rem 2rem; }
+		.column { box-sizing: border-box; flex-grow: 1; flex-shrink: 1; padding: 2rem; margin: auto; }
+		.column:first-of-type { width: 70% }
+		@media (max-width: 720px) {
+			.grid { display: block; }
+			.column { width: 100%; margin: 10vh 0; }
 		}
-
+	</style>
+	<style id="card-styles">
 		ia-toggle {
 			--ia-toggle-size: 20px;
 			--ia-toggle-background-color: #f1f1f1;
 			--ia-toggle-color: #999;
 			--ia-toggle-highlight: #0e8c11;
 		}
-
 		ia-card {
+			background-color: #fff;
+			color: #333;
 			max-width: 100%;
 		}
 	</style>
@@ -50,16 +64,36 @@
 	</script>
 </head>
 <body>
-<section class="grid">
-	<div class="column">
-		<ia-card title="Hello">
-			<div>Hello world!</div>
-		</ia-card>
-	</div>
-	<div class="column">
-		<ia-toggle label="Say Hello?" checked/>
-	</div>
-</section>
-
+<svg class="bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+	<defs>
+		<symbol id="icon-github" viewBox="0 0 36 42">
+			<path d="M18 3c9.938 0 18 8.062 18 18 0 7.945-5.156 14.695-12.305 17.086-0.914 0.164-1.242-0.398-1.242-0.867 0-0.586 0.023-2.531 0.023-4.945 0-1.688-0.562-2.766-1.219-3.328 4.008-0.445 8.227-1.969 8.227-8.883 0-1.969-0.703-3.562-1.852-4.828 0.187-0.469 0.797-2.297-0.187-4.781-1.5-0.469-4.945 1.852-4.945 1.852-1.43-0.398-2.977-0.609-4.5-0.609s-3.070 0.211-4.5 0.609c0 0-3.445-2.32-4.945-1.852-0.984 2.484-0.375 4.313-0.187 4.781-1.148 1.266-1.852 2.859-1.852 4.828 0 6.891 4.195 8.437 8.203 8.883-0.516 0.469-0.984 1.266-1.148 2.414-1.031 0.469-3.656 1.266-5.227-1.5-0.984-1.711-2.766-1.852-2.766-1.852-1.758-0.023-0.117 1.102-0.117 1.102 1.172 0.539 1.992 2.625 1.992 2.625 1.055 3.211 6.070 2.133 6.070 2.133 0 1.5 0.023 2.906 0.023 3.352 0 0.469-0.328 1.031-1.242 0.867-7.148-2.391-12.305-9.141-12.305-17.086 0-9.938 8.062-18 18-18zM6.82 28.852c0.047-0.094-0.023-0.211-0.164-0.281-0.141-0.047-0.258-0.023-0.305 0.047-0.047 0.094 0.023 0.211 0.164 0.281 0.117 0.070 0.258 0.047 0.305-0.047zM7.547 29.648c0.094-0.070 0.070-0.234-0.047-0.375-0.117-0.117-0.281-0.164-0.375-0.070-0.094 0.070-0.070 0.234 0.047 0.375 0.117 0.117 0.281 0.164 0.375 0.070zM8.25 30.703c0.117-0.094 0.117-0.281 0-0.445-0.094-0.164-0.281-0.234-0.398-0.141-0.117 0.070-0.117 0.258 0 0.422s0.305 0.234 0.398 0.164zM9.234 31.687c0.094-0.094 0.047-0.305-0.094-0.445-0.164-0.164-0.375-0.187-0.469-0.070-0.117 0.094-0.070 0.305 0.094 0.445 0.164 0.164 0.375 0.187 0.469 0.070zM10.57 32.273c0.047-0.141-0.094-0.305-0.305-0.375-0.187-0.047-0.398 0.023-0.445 0.164s0.094 0.305 0.305 0.352c0.187 0.070 0.398 0 0.445-0.141zM12.047 32.391c0-0.164-0.187-0.281-0.398-0.258-0.211 0-0.375 0.117-0.375 0.258 0 0.164 0.164 0.281 0.398 0.258 0.211 0 0.375-0.117 0.375-0.258zM13.406 32.156c-0.023-0.141-0.211-0.234-0.422-0.211-0.211 0.047-0.352 0.187-0.328 0.352 0.023 0.141 0.211 0.234 0.422 0.187s0.352-0.187 0.328-0.328z"></path>
+		</symbol>
+		<symbol id="icon-desktop" viewBox="0 0 45 42">
+			<path d="M42 23.25v-19.5c0-0.398-0.352-0.75-0.75-0.75h-37.5c-0.398 0-0.75 0.352-0.75 0.75v19.5c0 0.398 0.352 0.75 0.75 0.75h37.5c0.398 0 0.75-0.352 0.75-0.75zM45 3.75v25.5c0 2.063-1.688 3.75-3.75 3.75h-12.75c0 1.992 1.5 3.68 1.5 4.5s-0.68 1.5-1.5 1.5h-12c-0.82 0-1.5-0.68-1.5-1.5 0-0.867 1.5-2.461 1.5-4.5h-12.75c-2.063 0-3.75-1.688-3.75-3.75v-25.5c0-2.063 1.688-3.75 3.75-3.75h37.5c2.063 0 3.75 1.688 3.75 3.75z"></path>
+		</symbol>
+		<filter id="a" x="-20%" y="-20%" width="200%" height="200%">
+			<feDropShadow dx="40" dy="-10" stdDeviation="10" flood-color="#00000010"/>
+		</filter>
+	</defs>
+	<path fill="#622A41" d="M274.73 1080H68.56L454.08 0H1117L274.73 1080z" filter="url(#a)"/>
+	<path fill="#9F4D50" d="M721.43 1080H213.55V0h218.74l289.14 1080z" filter="url(#a)"/>
+	<path fill="#D27C54" d="M-1 734V0h936.97L-1 734z" filter="url(#a)"/>
+	<path fill="#F2B658" d="M497.66 1080H-.16V0l497.82 1080z" filter="url(#a)"/>
+</svg>
+<div class="wrapper">
+	<main>
+		<section class="grid">
+			<div class="column">
+				<ia-card title="Hello">
+					<div>Hello world!</div>
+				</ia-card>
+			</div>
+			<div class="column">
+				<ia-toggle label="Say Hello?" checked/>
+			</div>
+		</section>
+	</main>
+</div>
 </body>
 </html>

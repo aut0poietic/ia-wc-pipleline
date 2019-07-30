@@ -2,214 +2,56 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Unfortunate Web Components Misadventures</title>
+	<title>Unfortunate Misadventures in Web Components</title>
 	<link rel="preconnect" href="//fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,400i,700|Teko:400,700&display=optional" rel="stylesheet">
 	<style>
-		*, *:before, *:after {
-			box-sizing: inherit;
+		*, *:before, *:after { box-sizing: inherit; }
+		html { box-sizing: border-box; width: 100%; height: 100vh; margin: 0; padding: 0; font-size: 62.5%; }
+		body { width: 100%; height: 100vh; margin: 0; padding: 0; font-size: 1.6rem; font-family: 'Montserrat', sans-serif; font-weight: 400; overflow: hidden; background-color: #261025; background-image: linear-gradient(to right bottom, #2f152e, #2a1229, #250f25, #210b20, #1d051c); }
+		.wrapper { height: 100vh; clip-path: polygon(0 12vh, 100% 3vh, 100% 100%, 0% 100%); }
+		.bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; }
+		main { position: relative; z-index: 1; padding: 0.1rem 0.1rem 2.4rem 40vw; font-weight: 400; line-height: 2; color: #fff; height: 100%; overflow-y: scroll; overflow-x: hidden; }
+		main.scrollbehavior { scroll-behavior: smooth; }
+		@media screen and (prefers-reduced-motion: reduce) {
+			main.scrollbehavior { scroll-behavior: auto !important; }
 		}
-
-		html {
-			box-sizing: border-box;
-			width: 100%;
-			height: 100vh;
-			margin: 0;
-			padding: 0;
-			font-size: 62.5%;
-		}
-
-		body {
-			width: 100%;
-			height: 100vh;
-			margin: 0;
-			padding: 0;
-			font-size: 1.6rem;
-			font-family: 'Montserrat', sans-serif;
-			font-weight: 400;
-			overflow: hidden;
-			background-color: #261025;
-			background-image: linear-gradient(to right bottom, #2f152e, #2a1229, #250f25, #210b20, #1d051c);
-		}
-
-		.wrapper {
-			height: 100vh;
-			clip-path: polygon(0 12vh, 100% 3vh, 100% 100%, 0% 100%);
-		}
-
-		.bg {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100vw;
-			height: 100vh;
-		}
-
-		main {
-			position: relative;
-			z-index: 1;
-			margin-left: 40vw;
-			padding: 1px 4.8rem 2.4rem;
-			font-weight: 400;
-			line-height: 2;
-			color: #fff;
-			height: 100%;
-			overflow-y: scroll;
-			/*scroll-behavior: smooth;*/
-		}
-
 		@media (max-width: 980px) {
-			main {
-				margin-left: 25vw;
-			}
+			main { padding-left: 25vw; }
 		}
-
 		@media (max-width: 800px) {
-			main {
-				margin-left: 15vw;
-			}
+			main { padding-left: 15vw; }
 		}
-
-		@media (max-width: 600px) {
-			main {
-				margin-left: 0;
-				background-color: rgba(0, 0, 0, 0.5);
-				padding-bottom: 10vh;
-			}
-
-			.wrapper {
-				clip-path: polygon(0 12vh, 100% 3vh, 100% 94vh, 0% 90vh);
-			}
+		@media (max-width: 720px) {
+			main { padding-left: 0; background-color: rgba(0, 0, 0, 0.5); padding-bottom: 10vh; }
+			.wrapper { clip-path: polygon(0 12vh, 100% 3vh, 100% 94vh, 0% 90vh); }
 		}
-
-		header {
-			height: 100vh;
-		}
-
-		h1, h2, h3, h4 {
-			font-family: 'Teko', sans-serif;
-			font-weight: 400;
-		}
-
-		.small {
-			font-size: 1.2rem;
-			font-weight: 300;
-			font-family: 'Montserrat', sans-serif;
-		}
-
-		h1 {
-			position: relative;
-			font-size: 5.8rem;
-			margin-top: 30vh;
-			font-weight: 700;
-		}
-
-		h1 .small {
-			position: absolute;
-			top: 1.6rem;
-			left: 15rem;
-			display: block;
-			font-size: 1.3rem;
-			font-weight: 400;
-		}
-
-		header > aside {
-			text-align: right;
-			font-size: 1.4rem;
-			color: #917b90;
-		}
-
-		h2 {
-			font-size: 3.2rem;
-		}
-
-		h2 > .small {
-			position: relative;
-			top: -0.4rem;
-			display: inline-block;
-			height: 3.2rem;
-			line-height: 3.2rem;
-			padding: 0 0.4rem;
-			border-right: 0.2rem solid #917b90;
-			margin-right: 0.4rem;
-		}
-
-		main a {
-			color: #f2b658;
-			text-decoration-color: #917b90;
-			transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-		}
-
-		main a:hover,
-		main a:focus {
-			color: #f2cd88;
-			text-decoration-color: #fff;
-		}
-
-		main a[name] {
-			display: block;
-			position: relative;
-			top: -9vh;
-			visibility: hidden;
-		}
-
-		.lead {
-			font-weight: 100;
-			font-size: 2rem;
-		}
-
-		.mute {
-			color: #917b90;
-		}
-
-		.pullquote {
-			position: relative;
-			float: right;
-			padding: 3.2rem;
-			margin: 1.6rem 0 1.6rem 1.6rem;
-			font-size: 1.8rem;
-			max-width: 40%;
-			text-align: center;
-			font-style: italic;
-		}
-
-		.pullquote span {
-			position: relative;
-			z-index: 3;
-		}
-
-		.pullquote:before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			z-index: 2;
-			background-color: rgba(98, 42, 65, 0.96);
-			clip-path: polygon(0 1.2rem, 100% .3rem, 100% 99%, 0% 90%);
-		}
-
-		.pullquote:after {
-			content: "";
-			position: absolute;
-			top: -1.3rem;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			z-index: 1;
-			background-color: rgb(210, 124, 84);
-			clip-path: polygon(2rem 0.2rem, 100% 3rem, 100% 94%, 0% 100%);
-		}
-
-		ul.list-none {
-			list-style: none;
-		}
+		header.doc-header, section { padding: 1rem 4.8rem 0; }
+		header.doc-header { height: 100vh; }
+		h1, h2, h3, h4 { font-family: 'Teko', sans-serif; font-weight: 400; }
+		.small { font-size: 1.2rem; font-weight: 300; font-family: 'Montserrat', sans-serif; }
+		h1 { position: relative; font-size: 5.8rem; margin-top: 30vh; font-weight: 700; }
+		h1 .small { position: absolute; top: 1.6rem; left: 15rem; display: block; font-size: 1.3rem; font-weight: 400; }
+		header > aside { text-align: right; font-size: 1.4rem; color: #917b90; }
 	</style>
+	<link href="index.css" rel="stylesheet">
+	<script>
+		// Layout + scroll-behavior breaks jumping to an anchor on-load.
+		// Script adds the class after load so that the jump works as it should.
+		window.addEventListener('load', function () {
+			document.querySelector('main').classList.add('scrollbehavior');
+		});
+	</script>
 </head>
 <body>
 <svg class="bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
 	<defs>
+		<symbol id="icon-github" viewBox="0 0 36 42">
+			<path d="M18 3c9.938 0 18 8.062 18 18 0 7.945-5.156 14.695-12.305 17.086-0.914 0.164-1.242-0.398-1.242-0.867 0-0.586 0.023-2.531 0.023-4.945 0-1.688-0.562-2.766-1.219-3.328 4.008-0.445 8.227-1.969 8.227-8.883 0-1.969-0.703-3.562-1.852-4.828 0.187-0.469 0.797-2.297-0.187-4.781-1.5-0.469-4.945 1.852-4.945 1.852-1.43-0.398-2.977-0.609-4.5-0.609s-3.070 0.211-4.5 0.609c0 0-3.445-2.32-4.945-1.852-0.984 2.484-0.375 4.313-0.187 4.781-1.148 1.266-1.852 2.859-1.852 4.828 0 6.891 4.195 8.437 8.203 8.883-0.516 0.469-0.984 1.266-1.148 2.414-1.031 0.469-3.656 1.266-5.227-1.5-0.984-1.711-2.766-1.852-2.766-1.852-1.758-0.023-0.117 1.102-0.117 1.102 1.172 0.539 1.992 2.625 1.992 2.625 1.055 3.211 6.070 2.133 6.070 2.133 0 1.5 0.023 2.906 0.023 3.352 0 0.469-0.328 1.031-1.242 0.867-7.148-2.391-12.305-9.141-12.305-17.086 0-9.938 8.062-18 18-18zM6.82 28.852c0.047-0.094-0.023-0.211-0.164-0.281-0.141-0.047-0.258-0.023-0.305 0.047-0.047 0.094 0.023 0.211 0.164 0.281 0.117 0.070 0.258 0.047 0.305-0.047zM7.547 29.648c0.094-0.070 0.070-0.234-0.047-0.375-0.117-0.117-0.281-0.164-0.375-0.070-0.094 0.070-0.070 0.234 0.047 0.375 0.117 0.117 0.281 0.164 0.375 0.070zM8.25 30.703c0.117-0.094 0.117-0.281 0-0.445-0.094-0.164-0.281-0.234-0.398-0.141-0.117 0.070-0.117 0.258 0 0.422s0.305 0.234 0.398 0.164zM9.234 31.687c0.094-0.094 0.047-0.305-0.094-0.445-0.164-0.164-0.375-0.187-0.469-0.070-0.117 0.094-0.070 0.305 0.094 0.445 0.164 0.164 0.375 0.187 0.469 0.070zM10.57 32.273c0.047-0.141-0.094-0.305-0.305-0.375-0.187-0.047-0.398 0.023-0.445 0.164s0.094 0.305 0.305 0.352c0.187 0.070 0.398 0 0.445-0.141zM12.047 32.391c0-0.164-0.187-0.281-0.398-0.258-0.211 0-0.375 0.117-0.375 0.258 0 0.164 0.164 0.281 0.398 0.258 0.211 0 0.375-0.117 0.375-0.258zM13.406 32.156c-0.023-0.141-0.211-0.234-0.422-0.211-0.211 0.047-0.352 0.187-0.328 0.352 0.023 0.141 0.211 0.234 0.422 0.187s0.352-0.187 0.328-0.328z"></path>
+		</symbol>
+		<symbol id="icon-desktop" viewBox="0 0 45 42">
+			<path d="M42 23.25v-19.5c0-0.398-0.352-0.75-0.75-0.75h-37.5c-0.398 0-0.75 0.352-0.75 0.75v19.5c0 0.398 0.352 0.75 0.75 0.75h37.5c0.398 0 0.75-0.352 0.75-0.75zM45 3.75v25.5c0 2.063-1.688 3.75-3.75 3.75h-12.75c0 1.992 1.5 3.68 1.5 4.5s-0.68 1.5-1.5 1.5h-12c-0.82 0-1.5-0.68-1.5-1.5 0-0.867 1.5-2.461 1.5-4.5h-12.75c-2.063 0-3.75-1.688-3.75-3.75v-25.5c0-2.063 1.688-3.75 3.75-3.75h37.5c2.063 0 3.75 1.688 3.75 3.75z"></path>
+		</symbol>
 		<filter id="a" x="-20%" y="-20%" width="200%" height="200%">
 			<feDropShadow dx="40" dy="-10" stdDeviation="10" flood-color="#00000010"/>
 		</filter>
@@ -219,15 +61,15 @@
 	<path fill="#D27C54" d="M-1 734V0h936.97L-1 734z" filter="url(#a)"/>
 	<path fill="#F2B658" d="M497.66 1080H-.16V0l497.82 1080z" filter="url(#a)"/>
 </svg>
+
 <div class="wrapper">
 	<main>
-		<header>
+		<header class="doc-header">
 			<h1><span class="small">Unfortunate Misadventures in</span>Web Components</h1>
 			<aside>&mdash;or How I learned to stop worrying about and love the Shadow DOM.</aside>
 		</header>
 		<section>
-			<a name="01"></a>
-			<h2><span class="small">01</span> What is this about?</h2>
+			<h2><span class="small">01</span> <a name="01">What is this about?</a></h2>
 			<p class="lead">
 				So apparently, there are these things called <em>Web Components.</em>
 			</p>
@@ -278,8 +120,7 @@
 			</p>
 		</section>
 		<section>
-			<a name="02"></a>
-			<h2><span class="small">02</span> Throwing it All Away</h2>
+			<h2><span class="small">02</span> <a name="02">Throwing it All Away</a></h2>
 			<p class="lead">
 				This repo is a series of simple experiments for me to explore developing web components to solve the
 				needs of the project I described above.
@@ -331,7 +172,7 @@
 			</p>
 			<ul class="list-none">
 				<li>
-					<strong>Build</strong>
+					<strong>Build &amp; Tooling</strong>
 					<div>&mdash;Experiments trying to muddle my way towards the build-related goals.</div>
 				</li>
 				<li>
@@ -343,6 +184,533 @@
 					<div>&mdash;Create React/Vue/Svelte applications that consume the base components.</div>
 				</li>
 			</ul>
+		</section>
+		<section>
+			<h2><span class="small">03</span> <a name="03">Build &amp; Tooling</a></h2>
+			<p>
+				Simple experiments attempting to achieve a solid build process for web components that are compatible
+				with React/Preact, their particular build configurations and my personal development quirks.
+			</p>
+			<article>
+				<header>
+					<h3><span class="small">03:01</span> <a name="03-01">Webpack Default</a></h3>
+					<div class="meta">
+						<a href="./webpack-stupid-wc/" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-desktop"/>
+							</svg>
+							<span>Example</span></a>
+						<a href="https://github.com/aut0poietic/ia-wc-pipleline/tree/master/webpack-stupid-wc" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-github"/>
+							</svg>
+							<span>Source</span></a>
+					</div>
+				</header>
+				<p>
+					This is an intentionally stupid attempt at using Webpack to build a web component with no
+					specialized tooling or build process. The only non-standard webpack bit is the <code>css-to-string-loader</code>.
+					As you'd expect with an attempt named &quot;stupid&quot;, it didn't go so well.
+				</p>
+				<div class="table-aside">
+					<table>
+						<thead>
+						<tr>
+							<th>File</th>
+							<th>Weight</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>Source JS</td>
+							<td>448 B</td>
+						</tr>
+						<tr>
+							<td>Source CSS</td>
+							<td>326 B</td>
+						</tr>
+						<tr>
+							<td>Production Bundle</td>
+							<td>22 KB</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<p>
+					The primary issue is <strong>size</strong>. LitElement is a 3K library &mdash; if you don't count
+					the <strong>17 other files</strong> that are included via, well, <code>include</code>. In the end,
+					LitElement weighs in at around 43K, all files included. Once Webpack adds in it's overhead, then
+					minifies the whole thing, the resulting file is 22K.
+				</p>
+				<p>
+					On top of this are issues with the nature of webpack and LitElement. Both are much happier using
+					css-in-js which was completely counter to the goal. Webpack dumps the entire css file in a variable,
+					which has to be assigned to a class property on the component. In order to make that kludge work,
+					the entire CSS file has to be passed through LitHTML's <code>unsafeCSS</code> method. The resulting
+					<abbr title="Flash of Unstyled Content">FOUC</abbr> was extreme.
+				</p>
+				<p class="lead">
+					Result: <strong>Failed</strong>
+				</p>
+			</article>
+			<article>
+				<header>
+					<h3><span class="small">03:02</span> <a name="03-02">Webpack Reduced TC</a></h3>
+					<div class="meta">
+						<a href="./webpack-simple-wc/" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-desktop"/>
+							</svg>
+							<span>Example</span></a>
+						<a href="https://github.com/aut0poietic/ia-wc-pipleline/tree/master/webpack-simple-wc" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-github"/>
+							</svg>
+							<span>Source</span></a>
+					</div>
+				</header>
+				<p>
+					This example is a reduced text case version of the previous Webpack build process. The idea was to
+					strip out anything that could be inflating the file size and see what the bundled code would look
+					like.
+				</p>
+				<p>
+					In light of that, I removed LitElement, building the component natively and went with CSS &amp; HTML
+					in the JavaScript (even though it's counter to my goals and the way I enjoy writing code). I took
+					the time to hand-minify the HTML &amp; CSS as Webpack can't minify the content of strings.
+				</p>
+				<div class="table-aside left">
+					<table>
+						<thead>
+						<tr>
+							<th>File</th>
+							<th>Weight</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>Source JS</td>
+							<td>&lt; 1 KB</td>
+						</tr>
+						<tr>
+							<td>Production Bundle</td>
+							<td>2 KB</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<p>
+					The result was worth one of those face-palm moments.
+				</p>
+				<p>
+					Obviously, the reduced test case worked, producing a bundle file was 2K. If you think of the result
+					compared to the LitElement's 22K, it'd be understandable if you saw this as a successful test.
+				</p>
+				<p>
+					But seeing as the original file was just slightly less than 1K, a final bundle of 2K is not an
+					acceptable result. <strong>Minification should not increase the size of the bundle</strong>.
+				</p>
+				<p>
+					It's also throwing out all the goals of the project itself.
+				</p>
+				<p class="lead">
+					Result: <strong>Failed</strong>
+				</p>
+			</article>
+			<article>
+				<header>
+					<h3><span class="small">03:03</span> <a name="03-03">RollUp Reduced TC</a></h3>
+					<div class="meta">
+						<a href="./rollup-simple-wc/" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-desktop"/>
+							</svg>
+							<span>Example</span></a>
+						<a href="https://github.com/aut0poietic/ia-wc-pipleline/tree/master/rollup-simple-wc" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-github"/>
+							</svg>
+							<span>Source</span></a>
+					</div>
+				</header>
+				<p>
+					This example is the same reduced text case version that substitutes RollUp over webpack. I noticed
+					that LitElement uses RollUp in most of it's examples. In any project, it's hard to know if the
+					choice was one based on preference, politics or if there's a valid reason for the choice.
+				</p>
+				<p>
+					Again, I removed LitElement, building the component natively and used CSS &amp; HTML in the
+					JavaScript with hand-minified the HTML/ CSS.
+				</p>
+				<div class="table-aside left">
+					<table>
+						<thead>
+						<tr>
+							<th>File</th>
+							<th>Weight</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>Source JS</td>
+							<td>994 B</td>
+						</tr>
+						<tr>
+							<td>Production Bundle</td>
+							<td>848 B</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<p>
+					This reduced test case was more what I expected from the previous attempt.
+				</p>
+				<p>
+					The final bundle is smaller but not significantly so, which is to be expected from this test &mdash;
+					the majority of the &lsquo;weight&rsquo; of the file is located in the CSS &amp; HTML and there
+					should be some minification gains beyond what I could produce by hand with a purpose-built build
+					plugin.
+				</p>
+				<p class="lead">
+					Result: <strong>Progress</strong>
+				</p>
+			</article>
+			<article>
+				<header>
+					<h3><span class="small">03:04</span> <a name="03-04">RollUp External CSS</a></h3>
+					<div class="meta">
+						<a href="./rollup-ex-css-wc/" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-desktop"/>
+							</svg>
+							<span>Example</span></a>
+						<a href="https://github.com/aut0poietic/ia-wc-pipleline/tree/master/rollup-ex-css-wc" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-github"/>
+							</svg>
+							<span>Source</span></a>
+					</div>
+				</header>
+				<p>
+					Once again, this is the same component in previous examples, however this time around I moved the
+					CSS to it's own file and removed my hand-minification. The HTML is a simple template literal. The
+					CSS is loaded using the usual <code>import</code> statement and the variable the style were loaded
+					into placed into the template placeholder.
+				</p>
+				<div class="table-aside left">
+					<table>
+						<thead>
+						<tr>
+							<th>File</th>
+							<th>Weight</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>JS</td>
+							<td>754 B</td>
+						</tr>
+						<tr>
+							<td>CSS</td>
+							<td>307 B</td>
+						</tr>
+						<tr>
+							<td> Bundle</td>
+							<td>892 B</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<p>
+					The result worked so well, I went ahead and included PostCSS with autoprefixer and flex-bugs-fixes,
+					which is why the bundle file is slightly larger than the previous experiment.
+				</p>
+				<p>
+					Even better, the final, minified code is surprisingly clean. Unlike Webpack, RollUp did away with
+					the import for the CSS and injected it directly into the template string after running it through
+					PostCSS.
+				</p>
+				<p>In the end, this is a fairly usable configuration and shows the way for further development.</p>
+				<p class="lead">
+					Result: <strong>Success</strong>
+				</p>
+			</article>
+			<article>
+				<header>
+					<h3><span class="small">03:05</span> <a name="03-05">RollUp LitElement with External CSS</a></h3>
+					<div class="meta">
+						<a href="./rollup-lit-wc/" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-desktop"/>
+							</svg>
+							<span>Example</span></a>
+						<a href="https://github.com/aut0poietic/ia-wc-pipleline/tree/master/rollup-lit-wc" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-github"/>
+							</svg>
+							<span>Source</span></a>
+					</div>
+				</header>
+				<p>
+					With the success of the Rollup test cases, I brought LitElement back into the project. Again, same
+					component, now built with LitElement utilizing an external CSS file.
+				</p>
+				<div class="table-aside left">
+					<table>
+						<thead>
+						<tr>
+							<th>File</th>
+							<th>Weight</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>JS</td>
+							<td>446 B</td>
+						</tr>
+						<tr>
+							<td>CSS</td>
+							<td>305 B</td>
+						</tr>
+						<tr>
+							<td>Bundle</td>
+							<td>20 KB</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<p>
+					The result here is fairly lack-luster. Like Webpack, Rollup bundled the entire LitElement package
+					into the final file. Worse, Rollup refused to inline the CSS as it had in the native example. The
+					build failed until I wrapped the imported CSS with <code>unsafeCSS</code>.
+				</p>
+				<p>
+					It's a case of &quot;one-step-forward, one-step-back.&quot; In the end, this has soured me on the
+					use of LitElement, which is a shame.
+				</p>
+				<p class="lead">
+					Result: <strong>Failure</strong>
+				</p>
+			</article>
+			<article>
+				<header>
+					<h3><span class="small">03:06</span> <a name="03-06">RollUp Multiple Component Build</a></h3>
+					<div class="meta">
+						<a href="./rollup-multi-wc/" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-desktop"/>
+							</svg>
+							<span>Example</span></a>
+						<a href="https://github.com/aut0poietic/ia-wc-pipleline/tree/master/rollup-multi-wc" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-github"/>
+							</svg>
+							<span>Source</span></a>
+					</div>
+				</header>
+				<p>
+					This test is working towards a final, usable configuration that allows a single configuration to
+					build multiple components, each in it's own bundle file.
+				</p>
+				<div class="table-aside left">
+					<table>
+						<thead>
+						<tr>
+							<th>File</th>
+							<th>Weight</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>Card JS</td>
+							<td>754 B</td>
+						</tr>
+						<tr>
+							<td>Card CSS</td>
+							<td>316 B</td>
+						</tr>
+						<tr>
+							<td><strong>Card Bundle</strong></td>
+							<td><strong>896 B</strong></td>
+						</tr>
+						<tr>
+							<td>Toggle JS</td>
+							<td>3 KB</td>
+						</tr>
+						<tr>
+							<td>Toggle CSS</td>
+							<td>2 KB</td>
+						</tr>
+						<tr>
+							<td><strong>Toggle Bundle</strong></td>
+							<td><strong>5 KB</strong></td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<p>
+					I'd say this is the first fully-successful attempt to create something I could use for a production
+					project. I'm a little concerned at the size of the toggle component, but I'm putting that down to
+					sloppy coding &mdash; Seriously, it's embarrassingly bad and the accessibility model is useless
+					without JavaScript and likely fails in most browsers.
+				</p>
+				<p>
+					Still, it does precisely what I wanted with external CSS, and each file in it's own directory, with
+					each as it's own entry point. This produces a file that can be used anywhere.
+				</p>
+				<p>
+					I had so much fun with the attempt that I went ahead and wired the two together, with the toggle's
+					state determining the value of the card's title. It's a stupid bit of script, but it has almost
+					convinced me that web component can be a viable development tool.
+				</p>
+				<p class="lead">
+					Result: <strong>Success</strong>
+				</p>
+			</article>
+		</section>
+		<section>
+			<h2><span class="small">04</span> <a name="04">Components</a></h2>
+			<p>
+				These experiments are all about attempting to build components using various techniques. Most of these
+				examples will refine the build configurations in ways tailored to the component's needs.
+			</p>
+			<p>
+				Unlike the components in the Build section, any of these successful components should be <em>production
+				quality</em>, with usable accessibility models, fallback styles (when appropriate) and minimized files
+				suitable for use in any project.
+			</p>
+			<p>
+				All of the components are MIT licensed. If you like them, want to use or refine them, please feel free.
+				And for anyone asking, the <code>ia-</code> prefix is for
+				<a href="https://irresponsibleart.com/" target="_blank">Irresponsible Art</a>, in other words, me.
+			</p>
+			<article>
+				<header>
+					<h3><span class="small">04:01</span> <a name="04-01">Cross Carousel</a></h3>
+					<div class="meta">
+						<a href="./wc-ia-carousel/" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-desktop"/>
+							</svg>
+							<span>Example</span></a>
+						<a href="https://github.com/aut0poietic/ia-wc-pipleline/tree/master/wc-ia-carousel" target="_blank">
+							<svg focusable="false">
+								<use href="#icon-github"/>
+							</svg>
+							<span>Source</span></a>
+					</div>
+				</header>
+				<p>
+					I liked the idea of an image carousel that "split" the image when animating between images. I had in
+					mind an transition animation that was like an arc welder splitting the image in half, with sparks
+					and everything. I let the animation go in this version, as the particle effect was fairly heavy, but
+					the final result is still pretty useful.
+				</p>
+				<div class="table-aside right">
+					<table>
+						<thead>
+						<tr>
+							<th>File</th>
+							<th>Weight</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>Carousel JS</td>
+							<td>6 KB</td>
+						</tr>
+						<tr>
+							<td>Carousel CSS</td>
+							<td>2 KB</td>
+						</tr>
+						<tr>
+							<td>Carousel HTML</td>
+							<td>845 B</td>
+						</tr>
+						<tr>
+							<td>Slide JS</td>
+							<td>2 KB</td>
+						</tr>
+						<tr>
+							<td>Slide CSS</td>
+							<td>2 KB</td>
+						</tr>
+						<tr>
+							<td>Slide HTML</td>
+							<td>235 B</td>
+						</tr>
+						<tr>
+							<td><strong>Production Bundle</strong></td>
+							<td><strong>10 KB</strong></td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<p>
+					The carousel is actually made up of two different components, both bundled into the same file as
+					they cannot be used separately. I managed to refine the build process so that I could write the
+					JavaScript, CSS &amp; <strong>HTML</strong> in separate files.
+				</p>
+				<p>
+					I built in the ability to turn off both the next/previous navigation and the &quot;bullets&quot;
+					that appear below the images to control and indicate the current slide. Because of this I invested
+					some time in the accessibility of the component, reviewing the
+					<a href="https://www.w3.org/TR/wai-aria-practices/" target="_blank">ARIA Authoring Practices</a> and
+					implementing a dual-model for the component.
+				</p>
+				<p>
+					Without bullets, the carousel uses the group role to define the slides behavior, and the
+					next/previous buttons control the component. When the bullets are turned on, the accessibility model
+					shifts to that of a Tab/TabPanel with supplemental navigation.
+				</p>
+				<p>
+					I ensured that the external attributes <code>navigation</code>, <code>buttons</code>, and <code>index</code>
+					can all be manipulated using external Javascript. This should allow another framework to control and
+					potentially build a carousel as if it were HTML. I also took the time to build a fallback for if
+					JavaScript is turned off or if the component itself is not supported. But this revealed a problem&hellip;
+				</p>
+				<p>
+					Web Components are JavaScript; all of the structure and styles are implemented in JavaScript and if
+					JavaScript is not enabled, there's no way to control the appearance of the component when it fails
+					<em>from within the component</em>. So the fallback can't be bundled with the component itself.
+				</p>
+				<aside class="pullquote left"><span>The fallback for a component can't be bundled within the component itself.</span>
+				</aside>
+				<p>
+					At this point, I'm implementing the fallback in the hosting HTML, using <code>ia-carousel:not(:defined)</code>
+					styles. The pattern I chose reveals only the image for the first slide, and attribute content to
+					handle the title of the slide. The fallback style sets the image for the slide as the background
+					image, but if I were to redesign the component, I'd likely use a <code>slide:before{ content:
+					attr(src); }</code> instead.
+				</p>
+				<p>
+					I'm not sure how to handle the fallback, short of providing a fallback.css file that accompanies the
+					component. It's counter to the single 'universal' file for each component, but it at least would
+					help end-users using the component have a useful, default fallback strategy.
+				</p>
+			</article>
+			<article>
+				<header>
+					<h3><span class="small">04:02</span> <a name="04-02">CSS Dijkstra Grid</a></h3>
+					<div class="meta">
+						<a href="#04-02">
+							<svg focusable="false">
+								<use href="#icon-desktop"/>
+							</svg>
+							<span>Example</span></a> <a href="#04-02">
+						<svg focusable="false">
+							<use href="#icon-github"/>
+						</svg>
+						<span>Source</span></a>
+					</div>
+				</header>
+				<p class="lead">
+					<strong>In Development:</strong> Creating a CSS &quot;game grid&quot; that uses Dijkstra's algorithm
+					to display the movement possibilties for a &quot;character&quot; at any given position. The plan is
+					to use CSS 3D transformations to control the display of the grid itself and CSS Variables to
+					manipulate the view.
+				</p>
+			</article>
 		</section>
 	</main>
 </div>
