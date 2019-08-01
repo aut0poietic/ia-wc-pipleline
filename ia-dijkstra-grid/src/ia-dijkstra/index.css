@@ -1,0 +1,60 @@
+:host,
+ia-dijkstra {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd;
+  overflow: hidden;
+}
+.perspective {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  perspective: 100vw;
+}
+
+.grid {
+  position: relative;
+  margin: auto;
+  transform-origin: center;
+  transform: rotateX(60deg) rotateY(0deg) rotate(-40deg);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+.cell {
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #555;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  background-size: cover;
+}
+.cell:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: block;
+}
+.cell[cost="1"] {
+  background-image: url(dirt.jpg);
+}
+.cell[cost="2"] {
+  background-image: url(forrest.jpg);
+}
+.cell.moveable:hover:before {
+  background-color: rgba(113, 128, 255, 0.7);
+}
+.cell.moveable:before {
+  background-color: rgba(113, 128, 255, 0.4);
+}
+.cell.character:before {
+  background-color: rgba(14, 140, 17, 0.67);
+}
