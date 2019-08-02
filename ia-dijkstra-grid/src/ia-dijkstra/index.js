@@ -30,12 +30,15 @@ class IADijkstra extends HTMLElement {
 		this.attachShadow({mode: 'open'});
 		this.shadowRoot.appendChild(template.content.cloneNode(true));
 		this._grid = this.shadowRoot.querySelector('.grid');
+		this._character = this.shadowRoot.getElementById('character');
 		this._cells = [];
 		this._showing = false;
 	}
 
 	connectedCallback() {
 		this.initGrid(this.size);
+		this._character.style.left = this.characterX * 50 + 'px';
+		this._character.style.top = this.characterY * 50 + 'px';
 		this._grid.addEventListener('click', this.grid_onClick.bind(this));
 		this.resetGrid();
 	}
@@ -57,6 +60,8 @@ class IADijkstra extends HTMLElement {
 			if (e.target.classList.contains('moveable')) {
 				this.setAttribute('character-x', e.target.getAttribute('x'));
 				this.setAttribute('character-y', e.target.getAttribute('y'));
+				this._character.style.left = this.characterX * 50 + 'px';
+				this._character.style.top = this.characterY * 50 + 'px';
 				this.resetGrid();
 				this._showing = false;
 			}
